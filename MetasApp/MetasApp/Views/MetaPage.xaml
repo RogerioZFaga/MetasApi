@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MetasApp.ViewModels"
+             x:Class="MetasApp.Views.MetaPage">
+
+    <ContentPage.BindingContext>
+        <vm:MetaViewModel/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="Nova Meta" FontSize="24" HorizontalOptions="Center"/>
+
+            <Entry Placeholder="Nome" Text="{Binding MetaAtual.NomeMeta}" />
+            <Entry Placeholder="Descrição" Text="{Binding MetaAtual.DescricaoMeta}" />
+            <Entry Placeholder="ID Usuário" Keyboard="Numeric" Text="{Binding MetaAtual.IdUsuario}" />
+
+            <Button Text="Adicionar" Clicked="OnAdicionarClicked" />
+            <Button Text="Atualizar" Clicked="OnAtualizarClicked" />
+
+            <CollectionView ItemsSource="{Binding Metas}" SelectionMode="Single" SelectionChanged="OnSelecionarMeta">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10" ColumnDefinitions="*,Auto" Margin="5">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding NomeMeta}" FontAttributes="Bold" />
+                                <Label Text="{Binding DescricaoMeta}" FontSize="12" />
+                            </VerticalStackLayout>
+
+                            <Button Text="🗑"
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        CornerRadius="20"
+                        CommandParameter="{Binding IdMeta}"
+                        Clicked="OnExcluirMeta"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
